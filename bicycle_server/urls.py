@@ -11,5 +11,9 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', include(router.urls)),
     path('players/<int:page>/', views.players),
+    path('schedules/<int:page>/', views.schedules),
+    path('entries/<int:page>/', views.entries),
+    path('results/<int:page>/', views.results),
+    path('matches/<int:page>/', views.matches),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
