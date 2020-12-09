@@ -164,3 +164,16 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
             'BF3_DAY2_RANK',
             'BF3_DAY3_RANK',
         ]))
+
+class RaceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Entry
+        fields = list(map(get_lower, [
+            # 'id',
+            # 'MEET',
+            # 'STND_YEAR',
+            # 'TMS',
+            # 'DAY_ORD',
+            # 'RACE_DT',
+            'RACE_NO',
+        ]))
