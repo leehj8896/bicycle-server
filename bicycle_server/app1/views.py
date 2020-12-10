@@ -34,6 +34,30 @@ def players(request, page):
         json_dumps_params={'ensure_ascii': False}
     )
 
+def player_no(request, player_nm, player_no):
+
+    # permission_classes = [permissions.IsAuthenticated]
+    
+    q_sum = Q(racer_no=player_no) & Q(racer_nm=player_nm)
+
+    queryset = Player.objects.filter(q_sum)
+    serializer = PlayerSerializer(queryset, many=True)
+    return JsonResponse(serializer.data, 
+        safe=False, 
+        json_dumps_params={'ensure_ascii': False}
+    )
+
+def player_name(request, player_nm):
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    queryset = Player.objects.filter(racer_nm=player_nm)
+    serializer = PlayerSerializer(queryset, many=True)
+    return JsonResponse(serializer.data, 
+        safe=False, 
+        json_dumps_params={'ensure_ascii': False}
+    )
+
 def schedules(request, page):
     
     queryset = Schedule.objects.all()[(page-1)*20:page*20]
@@ -43,10 +67,12 @@ def schedules(request, page):
         json_dumps_params={'ensure_ascii': False}
     )
 
-def results(request, year, month, day):
+def results(request, year, month, day, race_no):
     
     queryset = Result.objects.filter(
-        Q(stnd_year=year) & Q(race_day=f'{month.zfill(2)}{day.zfill(2)}')).all()
+        Q(stnd_year=year) & 
+        Q(race_day=f'{month.zfill(2)}{day.zfill(2)}') & 
+        Q(race_no=race_no)).all()
 
     serializer = ResultSerializer(queryset, many=True)
     return JsonResponse(serializer.data, 
@@ -87,12 +113,14 @@ def entries(request, year, month, day, race_no):
     )
 
 
-def matches(request, page):
+def matches(request, player_no_1, player_no_2):
     
-    queryset = Match.objects.all()[(page-1)*20:page*20]
+    q1 = Q(player_no=player_no_1) & Q(partn_player_no=player_no_2)
+    q2 = Q(player_no=player_no_2) & Q(partn_player_no=player_no_1)
+    
+    queryset = Match.objects.filter(q1 | q2).all()
     serializer = MatchSerializer(queryset, many=True)
     return JsonResponse(serializer.data, 
         safe=False, 
         json_dumps_params={'ensure_ascii': False}
     )
-
