@@ -19,4 +19,9 @@ urlpatterns = [
     path('entries/<str:year>/<str:month>/<str:day>/<str:race_no>/', views.entries),
     path('results/<str:year>/<str:month>/<str:day>/<str:race_no>/', views.results),
     path('matches/<str:player_no_1>/<str:player_no_2>/', views.matches),
+    
+    path('player_prize_rate/<str:player_nm>/', views.player_prize_rate),
+    path('match_graph/<str:player_nm_1>/<str:player_nm_2>/', views.match_graph),
+    path('player_grade/<str:player_nm>/', views.player_grade),
+
 ]
