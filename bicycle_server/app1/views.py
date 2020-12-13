@@ -10,6 +10,7 @@ import pandas as pd
 import json
 from django.db.models import Count
 import datetime
+# from sklearn.cluster import KMeans
 
 # class UserViewSet(viewsets.ModelViewSet):
 #     """
@@ -328,3 +329,57 @@ def player_grade(request, player_nm):
         safe=False, 
         json_dumps_params={'ensure_ascii': False}
     )
+
+# def make_cluster(request):
+    
+#     queryset = Entry.objects.all().values(
+#         # 'gear_rate', 
+#         # 'win_rate',
+#         # 'high_rate',
+#         'high_3_rate',
+#         'tot_tms_avg_scr',
+#         # 'stnd_year',
+#         # 'win_tot_cnt',
+#         # 'run_day_cnt',
+#         # 'rec_200m',
+#         'racer_nm',
+#     )
+#     chulgu = read_frame(queryset)
+    
+#     chulgu['tot_tms_avg_scr'] = chulgu['tot_tms_avg_scr'].astype('float')
+#     # chulgu['stnd_year'] = chulgu['stnd_year'].astype('int')
+#     # chulgu['win_tot_cnt'] = chulgu['win_tot_cnt'].astype('float')
+#     # chulgu['run_day_cnt'] = chulgu['run_day_cnt'].astype('float')
+#     # chulgu['rec_200m_second'] = chulgu['rec_200m']
+#     # chulgu['rec_200m_second'] = chulgu['rec_200m_second'].str.replace('""', '.')
+#     # chulgu['rec_200m_second'] = chulgu['rec_200m_second'].str.replace('"', '')
+#     # chulgu['rec_200m_second'] = chulgu['rec_200m_second'].astype('float')
+
+#     # echulgu = chulgu[(chulgu['stnd_year']>= 2017)]
+#     # echulgu.reset_index(drop=True, inplace=True)
+#     # echulgu['prize_rate'] = (echulgu['win_tot_cnt'] / echulgu['run_day_cnt']) * 100
+#     # echulgu["prize_rate"] = echulgu["prize_rate"].fillna(0)
+#     # echulgu['prize_rate'] = echulgu['prize_rate'].round(2) 
+#     # echulgu['tot_scr_rate'] = (echulgu['tot_tms_avg_scr'] / 150) * 100
+#     # echulgu['tot_scr_rate'] = echulgu['tot_scr_rate'].round(2)
+
+#     group1 =  chulgu.groupby(['racer_nm']).mean()
+#     group1 = pd.DataFrame(group1)
+#     group1['Name'] = group1.index
+#     gdf1 = group1[['tot_tms_avg_scr', 'high_3_rate']]
+#     model = KMeans(n_clusters=10, algorithm='auto')
+#     model.fit(gdf1)
+#     pred = model.predict(gdf1)
+#     gdf1['cluster'] = pred
+#     gdf1['Name'] = gdf1.index
+#     list_result = gdf1.values.tolist()
+    
+#     for line in list_result:
+        
+#         print(line[3])
+    
+#     return JsonResponse(
+#         dict(), 
+#         safe=False, 
+#         json_dumps_params={'ensure_ascii': False}
+#     )
